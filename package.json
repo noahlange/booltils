@@ -1,0 +1,16 @@
+{
+  "name": "condeval",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Noah Lange <noahrlange@gmail.com>",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "test": "node --test",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "typescript": "^4.9.4"
+  }
+}
