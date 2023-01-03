@@ -63,7 +63,7 @@ const options = {
   ],
   bool: [
     { label: 'AND', value: Op.AND },
-    { label: 'OR', value: Op.OR },
+    { label: 'OR',  value: Op.OR },
     { label: 'XOR', value: Op.XOR },
     { label: 'NOR', value: Op.NOR }
   ]

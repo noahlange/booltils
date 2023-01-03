@@ -12,7 +12,7 @@ export enum Op {
   NOR = 0b000_11_000
 }
 
-export type Condition = [string, string, number];
+export type Condition = [string, string, number, ...unknown[]];
 
 export default function condeval(conditions: Condition[]): boolean {
   let res = true;
