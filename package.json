@@ -8,7 +8,7 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "test": "node --test",
-    "build": "tsc"
+    "prepare": "tsc"
   },
   "dependencies": {
     "typescript": "^4.9.4"
