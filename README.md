@@ -1,4 +1,4 @@
-# condeval
+# booltils
 
 Condition evaluation supporting mathematical and boolean operators. Ideal for embedding complex conditional logic into JSON or other static text formats.
 
@@ -9,11 +9,11 @@ The smallest three digits dictate the mathematical operator for the condition.
 | Operator |     Value      |
 | :------: | :------------: |
 |    =     | `0b000_00_001` |
-|    ≠    | `0b000_00_110` |
+|    ≠     | `0b000_00_110` |
 |    <     | `0b000_00_010` |
 |    >     | `0b000_00_100` |
-|    ≤    | `0b000_00_011` |
-|    ≥    | `0b000_00_101` |
+|    ≤     | `0b000_00_011` |
+|    ≥     | `0b000_00_101` |
 
 The next two digits dictate the boolean operator used to link the previous and current expressions — defaulting to `AND`.
 
@@ -31,21 +31,21 @@ The last three are unused/reserved for future features.
 The condition's operator is equal to the intersection (`|`) of the relevant mathematical and boolean operators.
 
 ```ts
-import evaluate, { Op } from "condeval";
+import evaluate, { Op } from 'booltils';
 
 const conditions = [
-  [1, 2, Op.LT],            //     1 < 2
-  [1, 2, Op.LT | Op.EQ],    // AND 1 ≤ 2
-  [1, 2, Op.EQ | Op.XOR],   // XOR 1 = 2
-  [2, 1, Op.GT | Op.OR],    //  OR 2 ≥ 1
-  [2, 2, Op.NE | Op.NOR]    // NOR 2 ≠ 2
+  [1, 2, Op.LT], //     1 < 2
+  [1, 2, Op.LT | Op.EQ], // AND 1 ≤ 2
+  [1, 2, Op.EQ | Op.XOR], // XOR 1 = 2
+  [2, 1, Op.GT | Op.OR], //  OR 2 ≥ 1
+  [2, 2, Op.NE | Op.NOR] // NOR 2 ≠ 2
 ];
 
-evaluate(conditions);       // true
+evaluate(conditions); // true
 JSON.stringify(conditions); // [[2,3,18]]
 ```
 
-## `condeval` in user interfaces
+## `booltils` in user interfaces
 
 It's worth noting that resulting representation is _not_ human-readable. It
 should be assembled using some sort of UI. The following options/values/change
@@ -103,19 +103,19 @@ const inputs = (
 Can be used alongside [`subwriter`](https://github.com/noahlange/subwriter) to interpolate variables, &c., while still permitting plaintext serialization.
 
 ```ts
-import { sub } from "subwriter";
-import evaluate, { Op } from "condeval";
+import { sub } from 'subwriter';
+import evaluate, { Op } from 'booltils';
 
 const filters = {
-  "-": (str, val) => str - val,
-  "+": (str, val) => str + val,
+  '-': (str, val) => str - val,
+  '+': (str, val) => str + val
 };
 
 const data = { abc: 1, def: 2 };
 
 const items = [
   [3, 4, Op.LT],
-  ["{abc|-=1}", "{def|-=2}", Op.EQ | Op.XOR],
+  ['{abc|-=1}', '{def|-=2}', Op.EQ | Op.XOR]
 ];
 
 const map = ([a, b, op]) => [sub(a, data, filters), sub(b, data, filters), op];
