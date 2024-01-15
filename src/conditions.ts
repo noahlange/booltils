@@ -1,20 +1,34 @@
+/**
+ * First three bits are for value comparison (>, <, =).
+ * Last two bits are for boolean operations (AND/OR/XOR/NOR).
+ */
 // prettier-ignore
 export enum Operator {
-  EQ =  0b000_00_001,
-  NE =  0b000_00_110,
-  GT =  0b000_00_100,
-  LT =  0b000_00_010,
-  LTE = 0b000_00_011,
-  GTE = 0b000_00_101,
-  AND = 0b000_00_000,
-  OR =  0b000_01_000,
-  XOR = 0b000_10_000,
-  NOR = 0b000_11_000
+  EQ =  0b00_001,
+  LT =  0b00_010,
+  GT =  0b00_100,
+  // these can be composed from the previous three operators.
+  NE =  0b00_110,
+  LTE = 0b00_011,
+  GTE = 0b00_101,
+  AND = 0b00_000,
+  // this may the opposite of what you might expect.
+  OR =  0b01_000,
+  XOR = 0b10_000,
+  NOR = 0b11_000
 }
 
-export type Condition = [string, string, number, ...unknown[]];
+export type Condition = [number, number, number, ...unknown[]];
+
+/**
+ * Helper function for composing operators
+ */
+export function getOperator(...parts: Operator[]) {
+  return parts.reduce((a, b) => a | b, 0);
+}
 
 export function evaluate(conditions: Condition[]): boolean {
+  // we're ANDing by default — an empty list of conditions should evaluate to true.
   let res = true;
   for (const [a, b, op] of conditions) {
     let val = false;
